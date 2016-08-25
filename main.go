@@ -3,9 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/alrs/plausible/generator"
 	"log"
 	"os"
-	"plausible/generator"
 )
 
 func printManufacturerList(m *generator.Manuf) {
