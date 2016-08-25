@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"math/rand"
+	"os"
 	"sort"
 	"strings"
 	"time"
@@ -24,6 +25,16 @@ const ManufPath = "/usr/share/wireshark/manuf"
 
 var UnparseableLineError = errors.New("Unparseable vendor line.")
 var NoSuchCompanyError = errors.New("No such company.")
+
+func NewManuf(path string) (Manuf, error) {
+	m := make(Manuf)
+	f, err := os.Open(path)
+	if err != nil {
+		return m, err
+	}
+	m.LoadRecords(f)
+	return m, err
+}
 
 // addPrefix takes a single prefix record and appends the prefix value
 // to the company key in the vendor map.
@@ -114,10 +125,10 @@ func parseLine(line string) (vr vendorRecord, err error) {
 
 	for k, v := range octetPosition {
 		octet, err := hex.DecodeString(line[v : v+2])
-		prefix[k] = uint8(octet[0])
 		if err != nil {
 			return vr, UnparseableLineError
 		}
+		prefix[k] = uint8(octet[0])
 	}
 
 	company = string(line[companyLeftColumn:len(line)])
