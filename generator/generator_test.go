@@ -80,3 +80,15 @@ func TestCompanyList(t *testing.T) {
 		t.Logf("Vendor map populated with %d entries, CompanyList() returned same.", len(manuf.CompanyList()))
 	}
 }
+
+func TestNewManuf(t *testing.T) {
+	m, err := NewManuf(ManufPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(m["google"]) > 0 {
+		t.Log("NewManuf() success")
+	} else {
+		t.Fatal("NewManuf() failure")
+	}
+}
