@@ -1,3 +1,25 @@
+/*
+plausible/generator - generates random MAC addresses with plausible
+manufacturer prefixes
+
+Copyright (C) 2016 Lars Lehtonen
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+// Generates random MAC addresses with plausible manufacturer prefixes
+// using the Wireshark manuf database.
 package generator
 
 import (
@@ -26,6 +48,8 @@ const ManufPath = "/usr/share/wireshark/manuf"
 var UnparseableLineError = errors.New("Unparseable vendor line.")
 var NoSuchCompanyError = errors.New("No such company.")
 
+// NewManuf instantiates a variable of type Manuf, and populates it
+// with data from the Wireshark manuf database file.
 func NewManuf(path string) (Manuf, error) {
 	m := make(Manuf)
 	f, err := os.Open(path)
