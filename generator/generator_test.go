@@ -51,13 +51,13 @@ func TestParseLine(t *testing.T) {
 	}
 }
 
-func TestLoadVendor(t *testing.T) {
+func TestLoadRecords(t *testing.T) {
 	f, err := os.Open(ManufPath)
 	if err != nil {
 		t.Fatal(err)
 	}
 	manuf := make(Manuf)
-	manuf.LoadRecords(f)
+	manuf.loadRecords(f)
 	t.Log(manuf["google"])
 }
 

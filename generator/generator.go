@@ -32,7 +32,7 @@ func NewManuf(path string) (Manuf, error) {
 	if err != nil {
 		return m, err
 	}
-	m.LoadRecords(f)
+	m.loadRecords(f)
 	return m, err
 }
 
@@ -53,9 +53,9 @@ func (m Manuf) CompanyList() []string {
 	return companies
 }
 
-// LoadRecords reads a flat file database of the Wireshark manuf
+// loadRecords reads a flat file database of the Wireshark manuf
 // format and loads it into the vendor map.
-func (m Manuf) LoadRecords(r io.Reader) (err error) {
+func (m Manuf) loadRecords(r io.Reader) (err error) {
 	scanner := bufio.NewScanner(r)
 	for scanner.Scan() {
 		line := scanner.Text()
