@@ -11,7 +11,7 @@ func TestAddVendor(t *testing.T) {
 		uint8(20),
 		uint8(30),
 	}
-	v := make(vendor)
+	v := make(Vendor)
 	vr := vendorRecord{
 		"test",
 		p,
@@ -26,7 +26,7 @@ func TestRandomMAC(t *testing.T) {
 		uint8(20),
 		uint8(30),
 	}
-	v := make(vendor)
+	v := make(Vendor)
 	vr := vendorRecord{
 		"test",
 		p,
@@ -56,13 +56,13 @@ func TestLoadVendor(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	v := make(vendor)
+	v := make(Vendor)
 	v.loadRecords(f)
 	t.Log(v["google"])
 }
 
 func TestCompanyList(t *testing.T) {
-	vendor := make(vendor)
+	vendor := make(Vendor)
 	vendorLines := []string{
 		"00:00:08        FuturePn        # Officially Xerox, but 0:0:0:0:0:0 is more common",
 		"00:00:01        Superlan        # SuperLAN-2U",

@@ -14,7 +14,7 @@ import (
 )
 
 type prefix [3]uint8
-type vendor map[string][]prefix
+type Vendor map[string][]prefix
 type vendorRecord struct {
 	company string
 	prefix  prefix
@@ -27,13 +27,13 @@ var NoSuchCompanyError = errors.New("No such company.")
 
 // addPrefix takes a single prefix record and appends the prefix value
 // to the company key in the vendor map.
-func (v vendor) addPrefix(vr vendorRecord) {
+func (v Vendor) addPrefix(vr vendorRecord) {
 	cleanCompanyName := strings.TrimSpace(strings.ToLower(vr.company))
 	v[cleanCompanyName] = append(v[cleanCompanyName], vr.prefix)
 }
 
 // CompanyList returns a list of every company key in the vendor map.
-func (v vendor) CompanyList() []string {
+func (v Vendor) CompanyList() []string {
 	companies := []string{}
 	for k, _ := range v {
 		companies = append(companies, k)
@@ -44,7 +44,7 @@ func (v vendor) CompanyList() []string {
 
 // loadRecords reads a flat file database of the Wireshark manuf
 // format and loads it into the vendor map.
-func (v vendor) loadRecords(r io.Reader) (err error) {
+func (v Vendor) loadRecords(r io.Reader) (err error) {
 	scanner := bufio.NewScanner(r)
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -65,7 +65,7 @@ func (v vendor) loadRecords(r io.Reader) (err error) {
 // RandomMAC provides a randomly-generated MAC address from
 // a randomly chosen portion of a company's assigned MAC
 // address space.
-func (v vendor) RandomMAC(company string) (string, error) {
+func (v Vendor) RandomMAC(company string) (string, error) {
 	companyRecord, ok := v[company]
 	if !ok {
 		return "", NoSuchCompanyError
