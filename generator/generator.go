@@ -14,50 +14,50 @@ import (
 )
 
 type prefix [3]uint8
-type Vendor map[string][]prefix
+type Manuf map[string][]prefix
 type vendorRecord struct {
 	company string
 	prefix  prefix
 }
 
-const manufPath = "/usr/share/wireshark/manuf"
+const ManufPath = "/usr/share/wireshark/manuf"
 
 var UnparseableLineError = errors.New("Unparseable vendor line.")
 var NoSuchCompanyError = errors.New("No such company.")
 
 // addPrefix takes a single prefix record and appends the prefix value
 // to the company key in the vendor map.
-func (v Vendor) addPrefix(vr vendorRecord) {
+func (m Manuf) addPrefix(vr vendorRecord) {
 	cleanCompanyName := strings.TrimSpace(strings.ToLower(vr.company))
-	v[cleanCompanyName] = append(v[cleanCompanyName], vr.prefix)
+	m[cleanCompanyName] = append(m[cleanCompanyName], vr.prefix)
 }
 
 // CompanyList returns a list of every company key in the vendor map.
-func (v Vendor) CompanyList() []string {
+func (m Manuf) CompanyList() []string {
 	companies := []string{}
-	for k, _ := range v {
+	for k, _ := range m {
 		companies = append(companies, k)
 	}
 	sort.Strings(companies)
 	return companies
 }
 
-// loadRecords reads a flat file database of the Wireshark manuf
+// LoadRecords reads a flat file database of the Wireshark manuf
 // format and loads it into the vendor map.
-func (v Vendor) loadRecords(r io.Reader) (err error) {
+func (m Manuf) LoadRecords(r io.Reader) (err error) {
 	scanner := bufio.NewScanner(r)
 	for scanner.Scan() {
 		line := scanner.Text()
 		record, err := parseLine(line)
-		if err == nil {
+		if err != nil {
 			switch err {
 			case UnparseableLineError:
-				return nil
+				break
 			default:
 				return err
 			}
 		}
-		v.addPrefix(record)
+		m.addPrefix(record)
 	}
 	return nil
 }
@@ -65,8 +65,8 @@ func (v Vendor) loadRecords(r io.Reader) (err error) {
 // RandomMAC provides a randomly-generated MAC address from
 // a randomly chosen portion of a company's assigned MAC
 // address space.
-func (v Vendor) RandomMAC(company string) (string, error) {
-	companyRecord, ok := v[company]
+func (m Manuf) RandomMAC(company string) (string, error) {
+	companyRecord, ok := m[company]
 	if !ok {
 		return "", NoSuchCompanyError
 	}

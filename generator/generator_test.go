@@ -11,7 +11,7 @@ func TestAddVendor(t *testing.T) {
 		uint8(20),
 		uint8(30),
 	}
-	v := make(Vendor)
+	v := make(Manuf)
 	vr := vendorRecord{
 		"test",
 		p,
@@ -26,7 +26,7 @@ func TestRandomMAC(t *testing.T) {
 		uint8(20),
 		uint8(30),
 	}
-	v := make(Vendor)
+	v := make(Manuf)
 	vr := vendorRecord{
 		"test",
 		p,
@@ -52,17 +52,17 @@ func TestParseLine(t *testing.T) {
 }
 
 func TestLoadVendor(t *testing.T) {
-	f, err := os.Open(manufPath)
+	f, err := os.Open(ManufPath)
 	if err != nil {
 		t.Fatal(err)
 	}
-	v := make(Vendor)
-	v.loadRecords(f)
-	t.Log(v["google"])
+	manuf := make(Manuf)
+	manuf.LoadRecords(f)
+	t.Log(manuf["google"])
 }
 
 func TestCompanyList(t *testing.T) {
-	vendor := make(Vendor)
+	manuf := make(Manuf)
 	vendorLines := []string{
 		"00:00:08        FuturePn        # Officially Xerox, but 0:0:0:0:0:0 is more common",
 		"00:00:01        Superlan        # SuperLAN-2U",
@@ -72,11 +72,11 @@ func TestCompanyList(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		vendor.addPrefix(vr)
+		manuf.addPrefix(vr)
 	}
-	if len(vendor.CompanyList()) != len(vendorLines) {
-		t.Fatalf("Company list is %d, expected %d", len(vendor.CompanyList()), len(vendorLines))
+	if len(manuf.CompanyList()) != len(vendorLines) {
+		t.Fatalf("Company list is %d, expected %d", len(manuf.CompanyList()), len(vendorLines))
 	} else {
-		t.Logf("Vendor map populated with %d entries, CompanyList() returned same.", len(vendor.CompanyList()))
+		t.Logf("Vendor map populated with %d entries, CompanyList() returned same.", len(manuf.CompanyList()))
 	}
 }
