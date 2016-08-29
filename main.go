@@ -11,7 +11,7 @@ import (
 var commit string
 var buildTime string
 
-func printManufacturerList(m *generator.Manuf) {
+func printManufacturerList(m generator.Manuf) {
 	companies := m.CompanyList()
 	for _, c := range companies {
 		fmt.Println(c)
@@ -43,7 +43,7 @@ func main() {
 	}
 
 	if *listArg {
-		printManufacturerList(&manuf)
+		printManufacturerList(manuf)
 	}
 
 	mac, err := manuf.RandomMAC(*manuArg)
