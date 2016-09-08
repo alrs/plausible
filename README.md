@@ -1,6 +1,9 @@
 plausible
 =========
 
+[![Build Status](https://travis-ci.org/alrs/plausible.svg?branch=master)](https://travis-ci.org/alrs/plausible)
+[![Go Report Card](https://goreportcard.com/badge/github.com/alrs/plausible)](https://goreportcard.com/report/github.com/alrs/plausible)
+
 The plausible program uses the database of MAC vendor prefixes from the
 Wireshark manuf file to generate MAC addresses with the first three
 octets corresponding to a desired vendor, and the second three octets
