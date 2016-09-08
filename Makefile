@@ -1,5 +1,8 @@
 BUILDFLAGS = -ldflags="-X main.commit=`git rev-parse HEAD` -X main.buildTime=`date -u '+%Y-%m-%d_%I:%M:%S%p'`"
 
+test:	manuf
+	go test -v ./...
+
 help:
 	@echo "help"
 	@echo

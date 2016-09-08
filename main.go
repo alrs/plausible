@@ -29,7 +29,7 @@ func main() {
 
 	listArg := flag.Bool("l", false, "List manufacturers.")
 	manuArg := flag.String("m", "google", "Select manufacturer.")
-	dbArg := flag.String("d", generator.ManufPath, "Path of database file.")
+	dbArg := flag.String("d", "/usr/share/wireshark/manuf", "Path of database file.")
 	versArg := flag.Bool("version", false, "Version information.")
 	flag.Parse()
 

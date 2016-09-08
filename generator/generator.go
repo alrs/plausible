@@ -18,8 +18,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-// Generates random MAC addresses with plausible manufacturer prefixes
-// using the Wireshark manuf database.
+// Package generator formulates a random MAC address with a plausible
+// OUI using the Wireshark manuf database.
 package generator
 
 import (
@@ -43,7 +43,7 @@ type vendorRecord struct {
 	prefix  prefix
 }
 
-const ManufPath = "/usr/share/wireshark/manuf"
+const ManufPath = "../manuf"
 
 var UnparseableLineError = errors.New("Unparseable vendor line.")
 var NoSuchCompanyError = errors.New("No such company.")
