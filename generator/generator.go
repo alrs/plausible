@@ -156,7 +156,18 @@ func parseLine(line string) (vr vendorRecord, err error) {
 	}
 
 	company = string(line[companyLeftColumn:len(line)])
-	company = strings.Split(company, "#")[0]
+
+	var splitCharacter string
+	if strings.Contains(line, "#") {
+		// old-style manuf files separate company name from comment with a #
+		splitCharacter = "#"
+	} else {
+		// new-style ca. 2017 manu files separate company name from comment
+		// with a tab
+		splitCharacter = "\t"
+	}
+
+	company = strings.Split(company, splitCharacter)[0]
 	company = strings.TrimSpace(company)
 
 	vr = vendorRecord{
