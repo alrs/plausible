@@ -1,1 +1,2 @@
 language: go
+before_install: apt-get -y install libwireshark-data
