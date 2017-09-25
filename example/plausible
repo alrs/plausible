@@ -1,0 +1,10 @@
+#!/bin/sh
+# This script belongs in /etc/network/if-pre-up.d
+# it assumes that the plausible binary is installed
+# in the $PATH. If you go-get plausible as a user
+# it will only be available in that user's $PATH.
+#
+# With this script installed all network interfaces
+# will come up with a randomized MAC address.
+
+ifconfig ${IFACE} hw ether `plausible`
