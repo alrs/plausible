@@ -35,8 +35,24 @@ func TestRandomMAC(t *testing.T) {
 	t.Log(v.RandomMAC("test"))
 }
 
-func TestParseLine(t *testing.T) {
+func TestParseOldLine(t *testing.T) {
 	validLine := "00:00:02        BbnWasIn        # BBN (was internal usage only, no longer used)"
+	invalidLine := "this should fail"
+	t.Log("Parsing valid line.")
+	parsed, err := parseLine(validLine)
+	t.Log(parsed)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log("Parsing invalid line.")
+	_, err = parseLine(invalidLine)
+	if err == nil {
+		t.Fatalf("Invalid line \"%s\" should have failed to parse.", invalidLine)
+	}
+}
+
+func TestParseNewLine(t *testing.T) {
+	validLine := "00:00:02        BbnWasIn\tBBN (was internal usage only, no longer used)"
 	invalidLine := "this should fail"
 	t.Log("Parsing valid line.")
 	parsed, err := parseLine(validLine)
@@ -66,6 +82,7 @@ func TestCompanyList(t *testing.T) {
 	vendorLines := []string{
 		"00:00:08        FuturePn        # Officially Xerox, but 0:0:0:0:0:0 is more common",
 		"00:00:01        Superlan        # SuperLAN-2U",
+		"00:00:02        NewStyle	New-style comment",
 	}
 	for _, v := range vendorLines {
 		vr, err := parseLine(v)
