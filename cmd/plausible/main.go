@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/alrs/plausible/generator"
+	"github.com/alrs/plausible"
 	"log"
 	"os"
 )
@@ -11,7 +11,7 @@ import (
 var commit string
 var buildTime string
 
-func printManufacturerList(m generator.Manuf) {
+func printManufacturerList(m plausible.Manuf) {
 	companies := m.CompanyList()
 	for _, c := range companies {
 		fmt.Println(c)
@@ -37,7 +37,7 @@ func main() {
 		printVersion()
 	}
 
-	manuf, err := generator.NewManuf(*dbArg)
+	manuf, err := plausible.NewManuf(*dbArg)
 	if err != nil {
 		log.Fatal(err)
 	}
