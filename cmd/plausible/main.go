@@ -19,23 +19,12 @@ func printManufacturerList(m plausible.Manuf) {
 	os.Exit(0)
 }
 
-func printVersion() {
-	fmt.Printf("Built at commit: %s\n", commit)
-	fmt.Println("UTC:", buildTime)
-	os.Exit(0)
-}
-
 func main() {
 
 	listArg := flag.Bool("l", false, "List manufacturers.")
 	manuArg := flag.String("m", "google", "Select manufacturer.")
 	dbArg := flag.String("d", "/usr/share/wireshark/manuf", "Path of database file.")
-	versArg := flag.Bool("version", false, "Version information.")
 	flag.Parse()
-
-	if *versArg {
-		printVersion()
-	}
 
 	manuf, err := plausible.NewManuf(*dbArg)
 	if err != nil {

@@ -1,5 +1,3 @@
-BUILDFLAGS = -ldflags="-X cmd/plausible/main.commit=`git rev-parse HEAD` -X cmd/plausible/main.buildTime=`date -u '+%Y-%m-%d_%I:%M:%S%p'`"
-
 help:
 	@echo "help"
 	@echo
@@ -15,10 +13,10 @@ manuf:
 	wget -O manuf "https://code.wireshark.org/review/gitweb?p=wireshark.git;a=blob_plain;f=manuf"
 
 build:
-	go build $(BUILDFLAGS)
+	go build ./...
 
 install:
-	go install $(BUILDFLAGS)
+	go install ./...
 
 clean:
 	rm -f manuf
