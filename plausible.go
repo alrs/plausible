@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Package generator formulates a random MAC address with a plausible
 // OUI using the Wireshark manuf database.
-package generator
+package plausible
 
 import (
 	"bufio"
@@ -43,7 +43,7 @@ type vendorRecord struct {
 	prefix  prefix
 }
 
-const ManufPath = "../manuf"
+const ManufPath = "manuf"
 
 var UnparseableLineError = errors.New("Unparseable vendor line.")
 var NoSuchCompanyError = errors.New("No such company.")

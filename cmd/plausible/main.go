@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/alrs/plausible/generator"
+	"github.com/alrs/plausible"
 	"log"
 	"os"
 )
@@ -11,17 +11,11 @@ import (
 var commit string
 var buildTime string
 
-func printManufacturerList(m generator.Manuf) {
+func printManufacturerList(m plausible.Manuf) {
 	companies := m.CompanyList()
 	for _, c := range companies {
 		fmt.Println(c)
 	}
-	os.Exit(0)
-}
-
-func printVersion() {
-	fmt.Printf("Built at commit: %s\n", commit)
-	fmt.Println("UTC:", buildTime)
 	os.Exit(0)
 }
 
@@ -30,14 +24,9 @@ func main() {
 	listArg := flag.Bool("l", false, "List manufacturers.")
 	manuArg := flag.String("m", "google", "Select manufacturer.")
 	dbArg := flag.String("d", "/usr/share/wireshark/manuf", "Path of database file.")
-	versArg := flag.Bool("version", false, "Version information.")
 	flag.Parse()
 
-	if *versArg {
-		printVersion()
-	}
-
-	manuf, err := generator.NewManuf(*dbArg)
+	manuf, err := plausible.NewManuf(*dbArg)
 	if err != nil {
 		log.Fatal(err)
 	}
