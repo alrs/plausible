@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# plausible random MAC generation for Debian systems.
+
 # This script belongs in /etc/network/if-pre-up.d
 # It assumes that the plausible binary is installed
 # in the $PATH.
